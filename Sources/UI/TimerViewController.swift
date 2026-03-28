@@ -2,11 +2,14 @@ import AppKit
 
 final class TimerViewController: NSViewController {
     private let timerView = TimerView()
+    private let statisticsView = StatisticsView()
+    private let settingsView = SettingsView()
     private let timer = PomodoroTimer()
     private let notificationManager = NotificationManager()
     private let settings = SettingsStore()
 
     private var tabView: NSSegmentedControl!
+    private var containerView: NSView!
 
     override func loadView() {
         view = NSView(frame: NSRect(x: 0, y: 0, width: 320, height: 400))
@@ -17,6 +20,7 @@ final class TimerViewController: NSViewController {
         setupUI()
         setupTimerCallbacks()
         updateUI()
+        showTab(0)
     }
 
     private func setupUI() {
@@ -29,19 +33,50 @@ final class TimerViewController: NSViewController {
         tabView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tabView)
 
+        // Container for content views
+        containerView = NSView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(containerView)
+
         // Timer view
         timerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(timerView)
+        timerView.isHidden = true
+        containerView.addSubview(timerView)
+
+        // Statistics view
+        statisticsView.translatesAutoresizingMaskIntoConstraints = false
+        statisticsView.isHidden = true
+        containerView.addSubview(statisticsView)
+
+        // Settings view
+        settingsView.translatesAutoresizingMaskIntoConstraints = false
+        settingsView.isHidden = true
+        containerView.addSubview(settingsView)
 
         NSLayoutConstraint.activate([
             tabView.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
             tabView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             tabView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
 
-            timerView.topAnchor.constraint(equalTo: tabView.bottomAnchor, constant: 12),
-            timerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            timerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            timerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            containerView.topAnchor.constraint(equalTo: tabView.bottomAnchor, constant: 12),
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            timerView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            timerView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            timerView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            timerView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+
+            statisticsView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            statisticsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            statisticsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            statisticsView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+
+            settingsView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            settingsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            settingsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            settingsView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
         ])
 
         timerView.onStart = { [weak self] in
@@ -84,6 +119,16 @@ final class TimerViewController: NSViewController {
     }
 
     @objc private func tabChanged() {
-        // Placeholder for tab navigation - statistics and settings views will be added in separate tasks
+        showTab(tabView.selectedSegment)
+    }
+
+    private func showTab(_ index: Int) {
+        timerView.isHidden = index != 0
+        statisticsView.isHidden = index != 1
+        settingsView.isHidden = index != 2
+
+        if index == 1 {
+            statisticsView.loadData()
+        }
     }
 }
