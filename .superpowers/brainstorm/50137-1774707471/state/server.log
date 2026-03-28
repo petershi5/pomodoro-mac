@@ -1,0 +1,12 @@
+{"type":"server-started","port":53770,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:53770","screen_dir":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/50137-1774707471/content","state_dir":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/50137-1774707471/state"}
+{"type":"screen-added","file":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/50137-1774707471/content/platform.html"}
+{"source":"user-event","type":"click","text":"A\n    \n      菜单栏应用 (Menu Bar)\n      图标常驻屏幕顶部菜单栏，点击展开计时器面板。不占用 Dock，不显眼但随时可及。","choice":"menubar","id":null,"timestamp":1774707721323}
+{"type":"screen-added","file":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/50137-1774707471/content/features.html"}
+{"type":"screen-added","file":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/50137-1774707471/content/notification.html"}
+{"source":"user-event","type":"click","text":"C\n    \n      两者结合\n      默认系统通知，可配置为重要时刻弹窗。","choice":"both","id":null,"timestamp":1774707767345}
+{"type":"screen-added","file":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/50137-1774707471/content/techstack.html"}
+{"source":"user-event","type":"click","text":"A\n    \n      Swift + AppKit\n      原生 macOS 开发，性能最佳，与系统深度集成。需要学习 Apple 开发。","choice":"swift","id":null,"timestamp":1774707795011}
+{"type":"screen-added","file":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/50137-1774707471/content/visual-style.html"}
+{"type":"screen-added","file":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/50137-1774707471/content/waiting.html"}
+{"type":"screen-added","file":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/50137-1774707471/content/ui-timer.html"}
+{"type":"screen-added","file":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/50137-1774707471/content/ui-stats-settings.html"}
