@@ -48,7 +48,7 @@ final class DatabaseManager {
     private func saveRecord(pomodorosCompleted: Int, focusMinutes: Int, breakMinutes: Int) {
         let today = todayDateString()
         do {
-            if let existing = try db?.pluck(pomodoros.filter(date == today)) {
+            if let _ = try db?.pluck(pomodoros.filter(date == today)) {
                 try db?.run(pomodoros.filter(date == today).update(
                     completedPomodoros += pomodorosCompleted,
                     totalFocusMinutes += focusMinutes,
@@ -90,12 +90,12 @@ final class DatabaseManager {
         formatter.dateFormat = "yyyy-MM-dd"
 
         for dayOffset in 0..<7 {
-            let date = Calendar.current.date(byAdding: .day, value: -dayOffset, to: Date())!
-            let dateString = formatter.string(from: date)
+            let recordDate = Calendar.current.date(byAdding: .day, value: -dayOffset, to: Date())!
+            let dateString = formatter.string(from: recordDate)
             do {
-                if let row = try db?.pluck(pomodoros.filter(date == dateString)) {
+                if let row = try db?.pluck(pomodoros.filter(self.date == dateString)) {
                     records.append(PomodoroRecord(
-                        date: date,
+                        date: recordDate,
                         completedPomodoros: row[completedPomodoros],
                         totalFocusMinutes: row[totalFocusMinutes],
                         totalBreakMinutes: row[totalBreakMinutes]
