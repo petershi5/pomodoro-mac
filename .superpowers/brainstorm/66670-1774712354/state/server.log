@@ -1,0 +1,4 @@
+{"type":"server-started","port":55634,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:55634","screen_dir":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/66670-1774712354/content","state_dir":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/66670-1774712354/state"}
+{"type":"screen-added","file":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/66670-1774712354/content/icon-design.html"}
+{"source":"user-event","type":"click","text":"A\n    \n      番茄主题\n      圆润的红色番茄，带有简洁的叶子装饰，经典番茄钟形象","choice":"tomato","id":null,"timestamp":1774712440345}
+{"type":"screen-added","file":"/Users/peter/Documents/GitHub/pomodoro-mac/.superpowers/brainstorm/66670-1774712354/content/icon-tomato-variants.html"}
