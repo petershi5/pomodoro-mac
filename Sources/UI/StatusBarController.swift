@@ -1,52 +1,52 @@
 import AppKit
 
 final class StatusBarController {
-    private var statusItem: NSStatusItem!
-    private var popover: NSPopover!
+    private var statusItem: NSStatusItem?
+    private var popover: NSPopover?
 
     var onShowPopover: (() -> Void)?
 
     init() {
-        setupStatusItem()
-        setupPopover()
-    }
-
-    private func setupStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "timer", accessibilityDescription: "Pomodoro")
+        if let button = statusItem?.button {
+            // Load from app bundle - try tiff first
+            if let bundlePath = Bundle.main.path(forResource: "16x16", ofType: "tiff"),
+               let image = NSImage(contentsOfFile: bundlePath) {
+                button.image = image
+                button.image?.isTemplate = true  // Important for menu bar icons
+            } else {
+                // Fallback to SF Symbol or emoji
+                if let image = NSImage(systemSymbolName: "timer", accessibilityDescription: "Pomodoro") {
+                    button.image = image
+                } else {
+                    button.title = "🍅"
+                }
+            }
             button.action = #selector(togglePopover)
             button.target = self
         }
-    }
-
-    private func setupPopover() {
         popover = NSPopover()
-        popover.contentSize = NSSize(width: 320, height: 400)
-        popover.behavior = .transient
-        popover.animates = true
+        popover?.contentSize = NSSize(width: 320, height: 400)
+        popover?.behavior = .transient
     }
 
     func setPopoverContent(_ viewController: NSViewController) {
-        popover.contentViewController = viewController
+        popover?.contentViewController = viewController
     }
 
     @objc private func togglePopover() {
-        if popover.isShown {
-            closePopover()
+        if popover?.isShown == true {
+            popover?.performClose(nil)
         } else {
-            showPopover()
+            if let button = statusItem?.button {
+                popover?.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+                onShowPopover?()
+            }
         }
     }
 
-    func showPopover() {
-        guard let button = statusItem.button else { return }
-        popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-        onShowPopover?()
-    }
-
     func closePopover() {
-        popover.performClose(nil)
+        popover?.performClose(nil)
     }
 
     func updateIcon(state: PomodoroState) {
@@ -61,6 +61,8 @@ final class StatusBarController {
         case .paused:
             symbolName = "pause.circle.fill"
         }
-        statusItem.button?.image = NSImage(systemSymbolName: symbolName, accessibilityDescription: "Pomodoro")
+        if let image = NSImage(systemSymbolName: symbolName, accessibilityDescription: "Pomodoro") {
+            statusItem?.button?.image = image
+        }
     }
 }
